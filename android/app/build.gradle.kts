@@ -7,8 +7,8 @@ plugins {
 
 android {
     namespace = "com.saksham.pdfviewer"
-    compileSdk = 34  // Updated to target SDK 34
-    ndkVersion = flutter.ndkVersion
+    compileSdk = 35  // Updated to target SDK 35 for compatibility with dependencies
+    ndkVersion = "27.0.12077973"  // Updated to match plugin requirements
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -25,7 +25,7 @@ android {
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = 21  // Setting minimum SDK to ensure compatibility
-        targetSdk = 34  // Setting target SDK to 34
+        targetSdk = 35  // Setting target SDK to 35
         versionCode = flutter.versionCode
         versionName = flutter.versionName
     }
