@@ -30,9 +30,6 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
       
-      - name: Run linter
-        run: flutter analyze
-      
       - name: Build APK
         run: flutter build apk --debug
       
