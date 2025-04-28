@@ -114,7 +114,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('PDF Viewer'),
-        backgroundColor: colorScheme.surfaceVariant,
+        backgroundColor: colorScheme.surfaceContainerHighest,
         foregroundColor: colorScheme.onSurfaceVariant,
         centerTitle: true,
         elevation: 0,
@@ -165,8 +165,8 @@ class _HomePageState extends State<HomePage> {
                   elevation: 0,
                   animationDuration: const Duration(milliseconds: 300),
                 ).copyWith(
-                  overlayColor: MaterialStateProperty.resolveWith((states) {
-                    if (states.contains(MaterialState.pressed)) {
+                  overlayColor: WidgetStateProperty.resolveWith((states) {
+                    if (states.contains(WidgetState.pressed)) {
                       return colorScheme.onPrimaryContainer.withOpacity(0.2);
                     }
                     return null;
@@ -261,7 +261,7 @@ class _PDFViewerPageState extends State<PDFViewerPage> {
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
         ),
-        backgroundColor: colorScheme.surfaceVariant,
+        backgroundColor: colorScheme.surfaceContainerHighest,
         foregroundColor: colorScheme.onSurfaceVariant,
         actions: [
           if (_totalPages > 0)
@@ -332,7 +332,7 @@ class _PDFViewerPageState extends State<PDFViewerPage> {
           _hasError || _totalPages <= 1
               ? null
               : BottomAppBar(
-                color: colorScheme.surfaceVariant,
+                color: colorScheme.surfaceContainerHighest,
                 elevation: 0,
                 height: 80,
                 padding: EdgeInsets.zero,
