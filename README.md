@@ -39,7 +39,7 @@ This project uses the following dependencies:
 - `file_picker: ^10.1.2`
 - `google_fonts: ^6.2.1`
 - `dynamic_color: ^1.7.0`
-- `pdf: ^3.6.0`
+- `pdf: ^3.11.3`
 - `path_provider: ^2.1.5`
 
 ## License
