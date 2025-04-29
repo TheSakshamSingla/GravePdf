@@ -8,6 +8,7 @@ import 'package:dynamic_color/dynamic_color.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:path_provider/path_provider.dart';
+import 'package:tabler_icons/tabler_icons.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -146,7 +147,7 @@ class _SplashScreenState extends State<SplashScreen>
                   child: FadeTransition(
                     opacity: _opacityAnimation,
                     child: Icon(
-                      Icons.picture_as_pdf_rounded,
+                      TablerIcons.file_text,
                       size: 120,
                       color: colorScheme.primary,
                     ),
@@ -347,7 +348,7 @@ class _HomePageState extends State<HomePage>
                       return Transform.scale(scale: value, child: child);
                     },
                     child: Icon(
-                      Icons.picture_as_pdf_rounded,
+                      TablerIcons.file_text,
                       size: 80,
                       color: colorScheme.primary,
                     ),
@@ -408,7 +409,7 @@ class _HomePageState extends State<HomePage>
                               ),
                             )
                             : Icon(
-                              Icons.file_open_rounded,
+                              TablerIcons.file_upload,
                               color: colorScheme.onPrimaryContainer,
                             ),
                         const SizedBox(width: 12),
@@ -461,7 +462,7 @@ class _HomePageState extends State<HomePage>
                               ),
                             )
                             : Icon(
-                              Icons.create_rounded,
+                              TablerIcons.file_plus,
                               color: colorScheme.onPrimaryContainer,
                             ),
                         const SizedBox(width: 12),
@@ -500,7 +501,7 @@ class _HomePageState extends State<HomePage>
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Icon(Icons.error_outline, color: colorScheme.error),
+                            Icon(TablerIcons.alert_circle, color: colorScheme.error),
                             const SizedBox(width: 12),
                             Flexible(
                               child: Text(
@@ -688,7 +689,7 @@ class _PDFViewerPageState extends State<PDFViewerPage>
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     _buildNavigationButton(
-                      icon: Icons.arrow_back_ios_rounded,
+                      icon: TablerIcons.chevron_left,
                       label: 'Previous',
                       onPressed:
                           _currentPage > 0
@@ -702,7 +703,7 @@ class _PDFViewerPageState extends State<PDFViewerPage>
                       colorScheme: colorScheme,
                     ),
                     _buildNavigationButton(
-                      icon: Icons.arrow_forward_ios_rounded,
+                      icon: TablerIcons.chevron_right,
                       label: 'Next',
                       onPressed:
                           _currentPage < _totalPages - 1
@@ -766,7 +767,7 @@ class _PDFViewerPageState extends State<PDFViewerPage>
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
-                Icons.error_outline_rounded,
+                TablerIcons.alert_circle,
                 size: 64,
                 color: colorScheme.error,
               ),
