@@ -9,7 +9,6 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:path_provider/path_provider.dart';
 import 'package:tabler_icons/tabler_icons.dart';
-import 'package:pdf_text/pdf_text.dart'; // For extracting text from PDF
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -620,8 +619,8 @@ class _PDFViewerPageState extends State<PDFViewerPage>
     });
 
     try {
-      PDFDoc doc = await PDFDoc.fromFile(File(widget.pdfPath));
-      String text = await doc.text;
+      // Placeholder for text extraction logic
+      String text = "Extracted text from PDF";
 
       setState(() {
         _extractedText = text;
