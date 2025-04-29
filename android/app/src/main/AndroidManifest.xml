@@ -6,7 +6,7 @@
     <application
         android:label="PDF Viewer"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher.png"
+        android:icon="@mipmap-xxxhdpi/ic_launcher.png"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:allowBackup="true"
         android:fullBackupContent="true">
