@@ -60,7 +60,7 @@ dev_dependencies:
 flutter_launcher_icons:
   android: true
   ios: true
-  image_path: "assets/icon/pdf_icon.png"
+  image_path: "assets/icon/pdf_icon_svg.svg"
   adaptive_icon_background: "#FFFFFF"
   adaptive_icon_foreground: "assets/icon/pdf_icon_foreground.png"
   adaptive_icon_monochrome: "assets/icon/pdf_icon_monochrome.png"
