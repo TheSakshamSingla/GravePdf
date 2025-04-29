@@ -5,6 +5,9 @@ import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:dynamic_color/dynamic_color.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:path_provider/path_provider.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -282,6 +285,37 @@ class _HomePageState extends State<HomePage>
     }
   }
 
+  // Create a new PDF file
+  Future<void> _createPDF() async {
+    final pdf = pw.Document();
+
+    pdf.addPage(
+      pw.Page(
+        build: (pw.Context context) => pw.Center(
+          child: pw.Text('Hello World'),
+        ),
+      ),
+    );
+
+    final output = await getTemporaryDirectory();
+    final file = File("${output.path}/example.pdf");
+    await file.writeAsBytes(await pdf.save());
+
+    setState(() {
+      _pdfPath = file.path;
+    });
+
+    // Navigate to PDF viewer page with animation
+    if (mounted) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => PDFViewerPage(pdfPath: _pdfPath!),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
@@ -380,6 +414,59 @@ class _HomePageState extends State<HomePage>
                         const SizedBox(width: 12),
                         Text(
                           _isLoading ? 'Opening...' : 'Open PDF',
+                          style: GoogleFonts.roboto(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  const SizedBox(height: 24),
+
+                  // Animated Create PDF button with pill shape
+                  FilledButton(
+                    onPressed: _isLoading ? null : _createPDF,
+                    style: FilledButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 16,
+                        horizontal: 32,
+                      ),
+                      backgroundColor: colorScheme.primaryContainer,
+                      foregroundColor: colorScheme.onPrimaryContainer,
+                      shape: const StadiumBorder(), // Pill shape
+                      elevation: 0,
+                      animationDuration: const Duration(milliseconds: 300),
+                    ).copyWith(
+                      overlayColor: WidgetStateProperty.resolveWith((states) {
+                        if (states.contains(WidgetState.pressed)) {
+                          return colorScheme.onPrimaryContainer.withAlpha(
+                            51,
+                          ); // 20% opacity
+                        }
+                        return null;
+                      }),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        _isLoading
+                            ? SizedBox(
+                              width: 24,
+                              height: 24,
+                              child: CircularProgressIndicator(
+                                color: colorScheme.onPrimaryContainer,
+                                strokeWidth: 2.5,
+                              ),
+                            )
+                            : Icon(
+                              Icons.create_rounded,
+                              color: colorScheme.onPrimaryContainer,
+                            ),
+                        const SizedBox(width: 12),
+                        Text(
+                          _isLoading ? 'Creating...' : 'Create PDF',
                           style: GoogleFonts.roboto(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
