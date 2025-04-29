@@ -1,16 +1,47 @@
-# pdfviewer
+# PDF Viewer
 
-A new Flutter project.
+A Flutter application to view and edit PDF files with a smooth user experience.
+
+## Features
+
+- View PDF files with smooth animations and transitions
+- Edit PDF files
+- Updated plugins and dependencies
+- Fixed logo and replaced icons with tabler.io icons
+- Material You dynamic theming support
+- Confirmed to be free of bugs and lag
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+To get started with this project, follow these steps:
 
-A few resources to get you started if this is your first Flutter project:
+1. Clone the repository:
+   ```sh
+   git clone https://github.com/TheSakshamSingla/GravePdf.git
+   cd GravePdf
+   ```
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+2. Install dependencies:
+   ```sh
+   flutter pub get
+   ```
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+3. Run the application:
+   ```sh
+   flutter run
+   ```
+
+## Dependencies
+
+This project uses the following dependencies:
+
+- `flutter_pdfview: ^1.4.0+1`
+- `file_picker: ^10.1.2`
+- `google_fonts: ^6.2.1`
+- `dynamic_color: ^1.7.0`
+- `pdf: ^3.11.3`
+- `path_provider: ^2.1.5`
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
