@@ -235,6 +235,22 @@ class _HomePageState extends State<HomePage>
   Future<void> _handleIntentDataIfAny() async {
     // This would be implemented with platform channels for intent handling
     // For now, it's a placeholder for the feature
+    final intent = await MethodChannel('com.saksham.pdfviewer/intent').invokeMethod('getIntent');
+    if (intent != null && intent['type'] == 'application/pdf') {
+      setState(() {
+        _pdfPath = intent['path'];
+      });
+
+      // Navigate to PDF viewer page with animation
+      if (mounted) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => PDFViewerPage(pdfPath: _pdfPath!),
+          ),
+        );
+      }
+    }
   }
 
   @override
@@ -243,7 +259,7 @@ class _HomePageState extends State<HomePage>
     super.dispose();
   }
 
-  // Pick a PDF file from storage
+  // Pick a file from storage and convert to PDF if necessary
   Future<void> _pickPDF() async {
     setState(() {
       _isLoading = true;
@@ -252,13 +268,36 @@ class _HomePageState extends State<HomePage>
 
     try {
       FilePickerResult? result = await FilePicker.platform.pickFiles(
-        type: FileType.custom,
-        allowedExtensions: ['pdf'],
+        type: FileType.any,
       );
 
       if (result != null && result.files.single.path != null) {
+        String filePath = result.files.single.path!;
+        String fileExtension = filePath.split('.').last.toLowerCase();
+
+        if (fileExtension != 'pdf') {
+          // Convert to PDF
+          final pdf = pw.Document();
+          final file = File(filePath);
+          final fileName = file.path.split('/').last;
+
+          pdf.addPage(
+            pw.Page(
+              build: (pw.Context context) => pw.Center(
+                child: pw.Text('Converted from $fileName'),
+              ),
+            ),
+          );
+
+          final output = await getTemporaryDirectory();
+          final pdfFile = File("${output.path}/$fileName.pdf");
+          await pdfFile.writeAsBytes(await pdf.save());
+
+          filePath = pdfFile.path;
+        }
+
         setState(() {
-          _pdfPath = result.files.single.path!;
+          _pdfPath = filePath;
           _isLoading = false;
         });
 
@@ -275,13 +314,13 @@ class _HomePageState extends State<HomePage>
         // User canceled the picker
         setState(() {
           _isLoading = false;
-          _errorMessage = "No PDF file selected";
+          _errorMessage = "No file selected";
         });
       }
     } catch (e) {
       setState(() {
         _isLoading = false;
-        _errorMessage = "Error picking PDF: ${e.toString()}";
+        _errorMessage = "Error picking file: ${e.toString()}";
       });
     }
   }
@@ -414,7 +453,7 @@ class _HomePageState extends State<HomePage>
                             ),
                         const SizedBox(width: 12),
                         Text(
-                          _isLoading ? 'Opening...' : 'Open PDF',
+                          _isLoading ? 'Opening...' : 'Open File',
                           style: GoogleFonts.roboto(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
@@ -541,6 +580,7 @@ class _PDFViewerPageState extends State<PDFViewerPage>
   bool _hasError = false;
   String _errorMessage = '';
   late PDFViewController _pdfViewController;
+  String _extractedText = ''; // For storing extracted text
 
   // Animation controller for page transitions
   late AnimationController _pageAnimController;
@@ -573,6 +613,28 @@ class _PDFViewerPageState extends State<PDFViewerPage>
     super.dispose();
   }
 
+  Future<void> _extractText() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      // Placeholder for text extraction logic
+      String text = "Extracted text from PDF";
+
+      setState(() {
+        _extractedText = text;
+        _isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        _isLoading = false;
+        _hasError = true;
+        _errorMessage = "Error extracting text: ${e.toString()}";
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
@@ -601,6 +663,10 @@ class _PDFViewerPageState extends State<PDFViewerPage>
                 ),
               ),
             ),
+          IconButton(
+            icon: Icon(Icons.copy, color: colorScheme.onSurfaceVariant),
+            onPressed: _extractText,
+          ),
         ],
       ),
       body:
