@@ -1,3 +1,5 @@
+name: pdfviewer
+description: a simple pdf viewer created by Saksham
 publish_to: 'none'
 
 version: 1.0.0+1
