@@ -1,0 +1,13 @@
+version: 2
+updates:
+  # For Dart/Flutter dependencies
+  - package-ecosystem: "pub"
+    directory: "/"
+    schedule:
+      interval: "daily"
+
+  # For Kotlin/Gradle dependencies in the "android" directory
+  - package-ecosystem: "gradle"
+    directory: "/android"
+    schedule:
+      interval: "daily"
